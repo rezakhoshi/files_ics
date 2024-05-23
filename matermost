@@ -1,0 +1,3 @@
+sudo rm /usr/share/keyrings/mattermost-archive-keyring.gpg
+
+curl -sL -o- https://deb.packages.mattermost.com/pubkey.gpg |  gpg --dearmor | sudo tee /usr/share/keyrings/mattermost-archive-keyring.gpg > /dev/null
