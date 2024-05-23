@@ -1,0 +1,14 @@
+vi /etc/environment
+ 
+PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin"
+http_proxy="http://1090:Reza1234@192.168.154.2:3128/"
+https_proxy="http://1090:Reza1234@192.168.154.2:3128/"
+ftp_proxy="http://1090:reza%40123@192.168.154.2:3128/"
+#no-proxy="localhost,127.0.0.1"
+
+
+-------------------------
+vi /etc/apt/apt.conf
+ 
+Acquire::http::Proxy "http://1090:Reza1234@192.168.154.2:3128/";
+Acquire::https::Proxy "http://1090:Reza1234@192.168.154.2:3128/";
