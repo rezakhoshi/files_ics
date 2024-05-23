@@ -25,7 +25,31 @@ LimitNOFILE=49152
 WantedBy=multi-user. target
 
 
-sudo apt install -y debian-keyring debian-archive-keyring apt-transport-https
-curl -1sf 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' | sudo gpg --dearmor -o /usr/share/keyrings/caddy-stable-archiv
-e-keyring. gpg
-curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt'| sudo tee /etc/apt/sources.list.d/caddy-stable.list
+
+
+nginx:
+
+server {
+    listen 80;
+    server_name your-domain.com;  # Replace with your domain or IP
+
+    location / {
+        proxy_pass http://localhost:8065;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Frame-Options SAMEORIGIN;
+        proxy_buffers 256 16k;
+        proxy_buffer_size 16k;
+        client_max_body_size 50M;  # Adjust to increase the maximum upload size, if necessary
+    }
+}
+
+sudo ln -s /etc/nginx/sites-available/mattermost /etc/nginx/sites-enabled/
+sudo nginx -t
+sudo systemctl restart nginx
+
